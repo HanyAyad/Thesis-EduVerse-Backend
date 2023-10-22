@@ -4,6 +4,9 @@ const { notFound, errorHandler, handleError } = require('./middlewares/errorHand
 const userRouter = require('./routes/userRoutes');
 const dotenv=require("dotenv").config();
 const bodyParser = require("body-parser");
+const courseCategoryRouter = require('./routes/courseCategoryRoutes');
+const courseRouter = require('./routes/courseRoutes');
+const lessonRouter = require('./routes/lessonRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -18,7 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.use("/api/user",userRouter);
-
+app.use("/api/course/category",courseCategoryRouter);
+app.use("/api/course",courseRouter);
+app.use("/api/lesson",lessonRouter);
 app.use(notFound);
 app.use(handleError);
 
