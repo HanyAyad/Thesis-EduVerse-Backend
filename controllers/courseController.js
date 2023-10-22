@@ -1,5 +1,6 @@
 const Course = require('../models/courseModel');
 const CourseCategory = require('../models/courseCategoryModel');
+const User=require('../models/userModel');
 const asyncHandler = require('express-async-handler');
 
 /*Create New Course*/
@@ -100,5 +101,42 @@ const deleteCourse = asyncHandler(async (req, res) => {
     }
 });
 
+/*Enroll Course */
+const enrollCourse = asyncHandler(async (req, res) => {
+    const {courseId}=req.params;
+    try {
+        const course=await Course.findById(courseId);
+        /*Check if the course is in the same faculty as the user */
+        if(course.faculty===req.user.faculty){
+            const addCourseToUser= await User.findByIdAndUpdate(req.user._id,{$push:{courses:courseId}},{new:true});
+            res.status(200).json({
+                status: true,
+                message: "Student Enrolled To Course Successfully",
+                data: addCourseToUser
+            });
+        }
+    } catch (error) {
+        
+    }
+});
 
-module.exports = { createCourse, getallCourses, getAllCoursesByFaculty, updateCourse, deleteCourse, getCourse };
+/*Check Enrollment */
+const checkEnrollment = asyncHandler(async (req, res) => {
+    const {courseId}=req.params;
+    const {id}= req.user;
+
+    const user= await User.findById(id);
+    let ids =[];
+    for (let i = 0; i < user.courses.length; i++) {
+        if(user.courses.length>0){
+            ids.push(user.courses[i].toString());
+        }
+    }
+    res.status(200).json({
+        status: ids.includes(courseId),
+        course: await Course.findById(courseId).exec(),
+});
+});
+
+
+module.exports = { createCourse, getallCourses, getAllCoursesByFaculty, updateCourse, deleteCourse, getCourse, enrollCourse, checkEnrollment };

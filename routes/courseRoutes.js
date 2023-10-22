@@ -1,10 +1,12 @@
-const { createCourse, getallCourses, getAllCoursesByFaculty, getCourse, updateCourse, deleteCourse } = require('../controllers/courseController');
+const { createCourse, getallCourses, getAllCoursesByFaculty, getCourse, updateCourse, deleteCourse, checkEnrollment, enrollCourse } = require('../controllers/courseController');
 const { authMiddleware, isTeacher } = require('../middlewares/authMiddleware');
 
 const courseRouter=require('express').Router();
 
 /*POST Routes */
 courseRouter.post('/post/:categoryId',authMiddleware,isTeacher,createCourse);
+courseRouter.post('/checkEnrollment/:courseId',authMiddleware,checkEnrollment);
+courseRouter.post('/enroll/:courseId',authMiddleware,enrollCourse);
 
 /*GET Routes */
 courseRouter.get('/all',authMiddleware,isTeacher,getallCourses);
