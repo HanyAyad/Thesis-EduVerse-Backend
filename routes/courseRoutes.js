@@ -4,7 +4,7 @@ const { authMiddleware, isTeacher } = require('../middlewares/authMiddleware');
 const courseRouter=require('express').Router();
 
 /*POST Routes */
-courseRouter.post('/post',authMiddleware,isTeacher,createCourse);
+courseRouter.post('/post/:categoryId',authMiddleware,isTeacher,createCourse);
 
 /*GET Routes */
 courseRouter.get('/all',authMiddleware,isTeacher,getallCourses);

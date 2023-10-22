@@ -2,6 +2,8 @@ const Lesson = require('../models/lessonModel');
 const Course = require('../models/courseModel');
 const asyncHandler = require('express-async-handler');
 
+
+/*Create A Lesson */
 const createLesson = asyncHandler(async (req, res) => {
     const {courseId}= req.params;
     try {
@@ -30,6 +32,8 @@ const createLesson = asyncHandler(async (req, res) => {
     }
 });
 
+
+/*Delete A Lesson */
 const deleteLesson = asyncHandler(async (req, res) => {
     const {courseId,lessonId}=req.params;
     try {
@@ -46,6 +50,8 @@ const deleteLesson = asyncHandler(async (req, res) => {
     }
 });
 
+
+/*Get Lesson By Id*/
 const getLesson = asyncHandler(async (req, res) => {
     const {lessonId}=req.params;
     try {
@@ -62,6 +68,8 @@ const getLesson = asyncHandler(async (req, res) => {
 
 });
 
+
+/*Get All Course Lessons */
 const getAllCourseLessons = asyncHandler(async (req, res) => {
     const {courseId}=req.params;
     try {
@@ -76,6 +84,8 @@ const getAllCourseLessons = asyncHandler(async (req, res) => {
     }
 });
 
+
+/*Update A Lesson */
 const updateLesson = asyncHandler(async (req, res) => {
     const {lessonId}=req.params;
     try {
