@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const courseCategoryRouter = require('./routes/courseCategoryRoutes');
 const courseRouter = require('./routes/courseRoutes');
 const lessonRouter = require('./routes/lessonRoutes');
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(cors());
 
 app.use("/api/user",userRouter);
 app.use("/api/course/category",courseCategoryRouter);
