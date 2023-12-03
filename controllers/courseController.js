@@ -2,6 +2,7 @@ const Course = require('../models/courseModel');
 const CourseCategory = require('../models/courseCategoryModel');
 const User=require('../models/userModel');
 const asyncHandler = require('express-async-handler');
+const { default: slugify } = require('slugify');
 
 /*Create New Course*/
 const createCourse = asyncHandler(async (req, res) => {
@@ -34,6 +35,20 @@ const getallCourses = asyncHandler(async (req, res) => {
             status: true,
             message: "All Courses Fetched Successfully",
             data: allCourses
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+/* Get Courses By List of Ids */
+const getCoursesByListofIds = asyncHandler(async (req, res) => {
+    const { ids } = req.query;
+    try {
+        const courses = await Course.find({ _id: { $in:  ids} , faculty: req.user.faculty });
+        res.status(200).json({
+            status: true,
+            message: "Courses Fetched Successfully",
+            data: courses
         });
     } catch (error) {
         throw new Error(error);
@@ -139,4 +154,4 @@ const checkEnrollment = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { createCourse, getallCourses, getAllCoursesByFaculty, updateCourse, deleteCourse, getCourse, enrollCourse, checkEnrollment };
+module.exports = { createCourse, getallCourses, getAllCoursesByFaculty, updateCourse, deleteCourse, getCourse, enrollCourse, checkEnrollment, getCoursesByListofIds };
