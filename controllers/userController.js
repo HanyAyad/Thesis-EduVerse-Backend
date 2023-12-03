@@ -44,6 +44,7 @@ const loginUser = asyncHandler(async (req, res) => {
             profilePic: findUser?.profilePic,
             isTeacher: findUser?.isTeacher,
             faculty: findUser?.faculty,
+            courses: findUser?.courses,
         });
     }   
     else{
