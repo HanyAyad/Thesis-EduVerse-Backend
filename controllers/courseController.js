@@ -18,6 +18,7 @@ const createCourse = asyncHandler(async (req, res) => {
         }
         const course=await Course.create(req.body);
         await CourseCategory.findByIdAndUpdate(categoryId,{$push:{courses: course._id}}, {new:true});
+        await User.findByIdAndUpdate(req.user._id,{$push:{courses:course._id}},{new:true});
         res.status(201).json(
             { status: true, 
             message: "Course Created Successfully", 
