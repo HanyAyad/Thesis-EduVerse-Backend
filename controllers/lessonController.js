@@ -1,6 +1,7 @@
 const Lesson = require('../models/lessonModel');
 const Course = require('../models/courseModel');
 const asyncHandler = require('express-async-handler');
+const { default: slugify } = require('slugify');
 
 
 /*Create A Lesson */
@@ -11,7 +12,7 @@ const createLesson = asyncHandler(async (req, res) => {
         console.log(findCourse); //Debugger
         if(findCourse){
             if(req.body.title){
-                res.body.slug= slugify(req.body.title.toLowerCase());
+                req.body.slug= slugify(req.body.title.toLowerCase());
             }
             const lesson = await Lesson.create(req.body);
             await Course.findByIdAndUpdate(courseId,{$push:{lessons: lesson._id}}, {new:true});
@@ -71,12 +72,12 @@ const getLesson = asyncHandler(async (req, res) => {
 
 /*Get All Course Lessons */
 const getAllCourseLessons = asyncHandler(async (req, res) => {
-    const {courseId}=req.params;
+    const { ids } = req.query;
     try {
-        const lessons = await Course.findById(courseId).select("lessons");
+        const lessons = await Lesson.find({ _id: { $in:  ids} });
         res.status(200).json({
             status: true,
-            message: "All Lessons Fetched Successfully",
+            message: "Course Lessons Fetched Successfully",
             data: lessons
         });
     } catch (error) {
