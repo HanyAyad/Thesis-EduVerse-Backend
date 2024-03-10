@@ -9,7 +9,6 @@ const createLesson = asyncHandler(async (req, res) => {
     const {courseId}= req.params;
     try {
         const findCourse = await Course.findById(courseId);
-        console.log(findCourse); //Debugger
         if(findCourse){
             if(req.body.title){
                 req.body.slug= slugify(req.body.title.toLowerCase());
@@ -86,19 +85,4 @@ const getAllCourseLessons = asyncHandler(async (req, res) => {
 });
 
 
-/*Update A Lesson */
-const updateLesson = asyncHandler(async (req, res) => {
-    const {lessonId}=req.params;
-    try {
-        const updatedLesson= await Lesson.findByIdAndUpdate(lessonId,req.body,{new:true});
-        res.status(200).json({
-            status:true,
-            message:"Lesson Updated Successfully",
-            data:updatedLesson
-        })
-    } catch (error) {
-        throw new Error(error);
-    }
-});
-
-module.exports = { createLesson, deleteLesson, getLesson, getAllCourseLessons, updateLesson};
+module.exports = { createLesson, deleteLesson, getLesson, getAllCourseLessons};

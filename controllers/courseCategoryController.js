@@ -66,24 +66,6 @@ const deleteCourseCategory = asyncHandler(async (req, res) => {
     }
 });
 
-/*Update Course Category By Id */
-
-const updateCourseCategory = asyncHandler(async (req, res) => {
-    const {id}=req.params;
-    try {
-        if(req.body.title){
-            req.body.slug=slugify(req.body.title.toLowerCase());
-        }
-        const updatedCourseCategory = await CourseCategory.findByIdAndUpdate(id, req.body, {new:true});
-        res.status(200).json({
-            status: true,
-            message: "Course Category Updated Successfully",
-            data: updatedCourseCategory
-        });
-    } catch (error) {
-        throw new Error(error);
-    }
-});
 
 
-module.exports = { postCourseCategory, getAllCourseCategories, getCourseCategory, deleteCourseCategory, updateCourseCategory };
+module.exports = { postCourseCategory, getAllCourseCategories, getCourseCategory, deleteCourseCategory };
