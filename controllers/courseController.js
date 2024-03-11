@@ -49,7 +49,6 @@ const enrollCourse = asyncHandler(async (req, res) => {
     const {courseId}=req.params;
     try {
         const course=await Course.findById(courseId);
-        /*Check if the course is in the same faculty as the user */
         if(course.faculty===req.user.faculty){
             const addCourseToUser= await User.findByIdAndUpdate(req.user._id,{$push:{courses:courseId}},{new:true});
             res.status(200).json({

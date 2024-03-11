@@ -71,9 +71,10 @@ const getLesson = asyncHandler(async (req, res) => {
 
 /*Get All Course Lessons */
 const getAllCourseLessons = asyncHandler(async (req, res) => {
-    const { ids } = req.query;
+    const { id } = req.query;
     try {
-        const lessons = await Lesson.find({ _id: { $in:  ids} });
+        const course = await Course.findById(id);
+        const lessons = await Lesson.find({ _id: { $in:  course.lessons} });
         res.status(200).json({
             status: true,
             message: "Course Lessons Fetched Successfully",
