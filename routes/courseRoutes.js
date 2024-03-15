@@ -2,7 +2,7 @@ const { createCourse, enrollCourse, getCoursesByListofIds } = require('../contro
 const { authMiddleware, isTeacher } = require('../middlewares/authMiddleware');
 
 const courseRouter=require('express').Router();
-courseRouter.post('/post/:categoryId',authMiddleware,isTeacher,createCourse);
+courseRouter.post('/createcourse/:categoryId',authMiddleware,isTeacher,createCourse);
 courseRouter.post('/enroll/:courseId',authMiddleware,enrollCourse);
 courseRouter.get('/thisgetcourses', authMiddleware, getCoursesByListofIds);
 
